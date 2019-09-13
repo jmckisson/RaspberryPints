@@ -1,0 +1,10 @@
+In /var/www/html create a file named info.php
+
+In the info.php put
+<?php
+phpinfo();
+?>
+
+save the file
+
+In the browser surf to http://localhost/info.php
