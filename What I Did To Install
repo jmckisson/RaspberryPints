@@ -1,0 +1,164 @@
+What I did to install latest OS, php, MariaDB, etc and use the Raspberry Pints code I modified for the latest items. If someone would like to provide a better write up including flow meters.
+
+Need at least 32GB microSD card
+
+Raspberry Pi
+Set a default user name
+Set a default password
+
+Command terminal
+type sudo su and press enter
+
+update things by typing
+apt-get update && apt-get upgrade
+
+When starts select Graphical install.
+
+The graphical install indicates this is debian 9
+Select American English keyboard
+Install to one partition (recommended for new users)
+
+Install LAMP on Debian 9 Stretch
+http://tecadmin.net/install-lamp-stack-debian-9-stretch/
+
+sudo su
+ssh root@debian9
+sudo apt install ca-certificates apt-transport-https
+
+Install Apache 2
+sudo apt-get install apache2
+
+Install MariaDB (replacement for MySQL) MariaDB 10.1 installed
+sudo apt-get install mysql-server
+
+Install PHP
+wget -q https://packages.sury.org/php/apt.gpg -O- | sudo apt-key add -
+sudo echo "deb https://packages.sury.org/php/ stretch main" | tee /etc/apt/sources.list.d/php.list
+
+Then install Latest PHP version on Debian 9. (installs php 7.2)
+
+sudo apt update
+sudo apt upgrade
+sudo apt install php php-mysql libapache2-mod-php
+
+Verify Setup
+To verify LAMP setup on Debian 9, Create a PHP script with phpinfo() function under Apache document root. To do this, edit /var/www/html/info.php file in your favorite text editor and add below content to the file and save it.
+
+<?php
+phpinfo();
+?>
+
+Now access the info.php file in the web browser using your system IP address. Host name is raspberry. Surf to http://raspberry/info.php or localhost/info.php
+
+** Install phpMyAdmin on Debian
+
+First, update the Apt package manager cache on your Debian system to make the sure system have the latest version of packages.
+
+sudo apt-get update
+
+Now, Install phpMyAdmin by running the following command. This will also install required dependencies automatically.
+
+sudo apt-get install phpmyadmin
+
+The package configuration will ask for the basic configuration for phpMyAdmin. The first, you need to select web server to configure. This tutorial is using Apache web server.
+
+MySQL application password for phpmyadmin (use phpmyadminPW)
+
+** Configure Apache for phpMyAdmin
+
+The phpMyAdmin setup is completed now. Just to make sure that phpmyadmin.conf is created under /etc/apache2/conf-enabled/ directory. Now you can access phpMyAdmin using system’s hostname or IP address.
+
+browser surf to http://localhost/phpmyadmin
+If not working ensure mariadb is running. At command prompt type systemctl status mariadb
+
+If running configure phpmyadmin with dpkg-reconfigure -plow phpmyadmin
+See http://manjaro.site/how-to-install-phpmyadmin-on-debian-9-stretch/
+
+Also do
+sudo nano /etc/apache2/apache2.conf
+insert: "Include /etc/phpmyadmin/apache.conf" at the bottom of file.
+restart apache2 sudo /etc/init.d/apache2 restart
+
+** Configure Apache for phpMyAdmin
+
+Surf to http://localhost/phpmyadmin is now working
+
+This requires MySQL username and password to login to phpMyAdmin
+
+I get "#1698 - Access deined for user 'root'@'localhost'
+
+MySQL 5.7 changed the secure model: now MySQL root login requires a sudo.
+
+I.e., phpMyAdmin will be not able to use root credentials.
+
+The simplest, safest and permanent solution will be create a new user and grant required privileges.
+1. Connect to mysql
+
+sudo mysql --user=root mysql
+
+2. Create a user for phpMyAdmin
+
+Run the following commands (replacing some_pass by the desired password):
+
+CREATE USER 'phpmyadmin@localhost' IDENTIFIED BY 'some_pass';
+GRANT ALL PRIVILEGES ON *.* TO 'phpmyadmin@localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+
+Verify use has correct permissions.
+SHOW GRANTS FOR 'phpmyadmin'@localhost;
+If your phpMyAdmin is connecting to localhost, this should be enough.
+
+Update phpMyAdmin
+
+Using sudo, edit /etc/dbconfig-common/phpmyadmin.conf file updating user/password values in the following sections (replacing some_pass by the password used in Step #2):
+
+# dbc_dbuser: database user
+# the name of the user who we will use to connect to the database.
+dbc_dbuser='phpmyadmin'
+
+# dbc_dbpass: database user password
+# the password to use with the above username when connecting
+# to a database, if one is required
+dbc_dbpass='some_pass'
+
+Now surf to http://localhost/phpmyadmin
+Log in with phpmyadmin@localhost password used in Step #2
+
+I'm in!
+
+Server type: MariaDB
+Server version: 10.1.37-MariaDB-0+deb9u1 - Debian 9.6
+PHP version: 7.2.13
+
+***********
+
+Copy the RaspberryPints-2.1.0 folder and files into /var/www/html
+
+Set permissions sudo chmod -R 777 /var/www/html
+
+Browse to localhost/index.php
+provide all values!
+
+Now at the "Welcome to Raspberry Pints!" page.
+Root Password: (required)
+Database Username: (need value)
+Database Password: (need value)
+
+RPints Username: (need value)
+Your Name: (need value)
+Admin password: (need value)
+
+If just want to test, play around, include sample data otherwise must enter data.
+
+**** I get the following
+Validating Entries...Success!
+Checking DB connectivity...Success!
+Checking config folder permissions...Success!
+
+***
+
+If encounter the following error then all required values were not supplied during the Raspberry Pints setup.
+Checking DB connectivity...
+Warning: mysqli_connect()" (HY000/1698): Access denied for user 'root'@'localhost' in /var/www/html/install/includes/configprocessor.php on line 52
+Success!
+Checking config folder permissions...Success! 
