@@ -1,0 +1,50 @@
+I’m sure most know the following, but the information deserves dissemination as we have new folks joining us all the time.
+
+Once Raspberry Pi and Raspberry Pints are up and working then make a clone of the SD card. SD cards can and will fail. Without a clone one must suffer thru the agony of doing everything all over again.
+
+There are several ways of accomplishing the SD card clone, but, to me, the easiest way is simply using the one built into Raspbian. In Raspbian click Accessories-> SD Card Copier.
+
+Purchase several microSD cards when they are on sale. Get from NewEgg, Frys, etc.
+Get at least the same size as the current SD card or larger SD capacity.
+
+Using the SD Card Copier it’s not possible to create an image in the file system, swap out the SD card and then write the image to the backup SD card. I use a multi-card header with a USB connection. This works fine in the Raspberry Pi. Simply plug in the multi-card header into one of the USB slots and Raspberry Pi recognized it.
+
+OK. Let’s get started.
+
+1. If not already running, start the Raspberry Pi.
+
+2. If the browser is running displaying Raspberry Pints, exit the browser by pressing Alt-F4.
+
+3. Insert the new microSD card into the header and insert the multi-card header into one of the Pi’s USB slots. In a bit a dialog appears asking to show the SD contents in File Explorer. Cancel this request. Likewise, if Raspbian complains about the SD card needing formatting, ignore the request as the copy will handle things.
+
+4. Click the Raspberry Pi logo in the upper left hand and then click Accessories-> SD Card Copier.
+
+5. In the dialog that appears ensure the source is the running microSD card and the destination is the new microSD card in the multi-card header.
+
+6. If things are OK then click the Start button. Wait for the copy to finish as there are probably more than 1 partition.
+
+7. When the SD card copy has completed, shutdown the Raspberry Pi.
+
+8. When the Raspberry Pi has completely shut down, unplug the power from the Pi.
+
+9. Remove the microSD card from the Pi. Handle carefully. Don’t cause static. Place the microSD card on a non-conductive/non-plastic surface, probably anti-static bag is best.
+
+10. Remove the newly created microSD card from the multi-card header and carefully insert the microSD card into the Pi. Ensure correct side is up/down when inserting.
+
+11. Plug in the power to the Pi and power on the Pi. Wait until everything is ready. If the new microSD card is larger than the original it will take a while the first time booting as the OS will adjust things for the new microSD card size. Eventually, we’ll see the Raspberry Pints display in the browser. 
+
+12. Woohoo! The clone backup is working.
+
+13. Power down the Pi.
+
+14. When the Raspberry Pi has completely shut down, unplug the power from the Pi.
+
+15. Remove the microSD card and put in a safe, clearly marked anti-static location.
+
+16. Insert the original microSD card into the Pi.
+
+17. Use Raspberry Pints as usual. If the microSD card dies, we now have a backup.
+
+I know, I know. Sounds like a LOT of steps, but I wanted to describe in detail the steps.
+
+Hope others find the information useful.
