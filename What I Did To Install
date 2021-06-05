@@ -60,9 +60,9 @@ Now, Install phpMyAdmin by running the following command. This will also install
 
 sudo apt-get install phpmyadmin
 
-The package configuration will ask for the basic configuration for phpMyAdmin. The first, you need to select web server to configure. This tutorial is using Apache web server.
+The package configuration will ask for the basic configuration for phpMyAdmin. Need to select web server to configure. This tutorial is using Apache web server.
 
-MySQL application password for phpmyadmin (use phpmyadminPW)
+mariaDB application password for phpmyadmin (use phpmyadminPW)
 
 ** Configure Apache for phpMyAdmin
 
@@ -83,7 +83,7 @@ restart apache2 sudo /etc/init.d/apache2 restart
 
 Surf to http://localhost/phpmyadmin is now working
 
-This requires MySQL username and password to login to phpMyAdmin
+This requires mariaDB username and password to login to phpMyAdmin
 
 I get "#1698 - Access deined for user 'root'@'localhost'
 
@@ -162,3 +162,15 @@ Checking DB connectivity...
 Warning: mysqli_connect()" (HY000/1698): Access denied for user 'root'@'localhost' in /var/www/html/install/includes/configprocessor.php on line 52
 Success!
 Checking config folder permissions...Success! 
+
+***
+
+If encounter the following error then following the instructions.
+Try to run Raspberry Pints and get PHP Fatal error; Call to undefined function mb_strlen()... etc
+
+Must do
+
+apt-get install php-mbstring
+
+Then restart apache or reboot the pi OS.
+
